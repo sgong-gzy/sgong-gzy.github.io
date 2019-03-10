@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-101219776-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>React Native在原生Android app的启动白屏问题 | much joy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  
+  
+  <meta name="description" content="入React Native的坑已经一年多了。在植入原生的Android app过程中遇到了各种的问题。以下做个总结。 Start up performanceReact Native在不加第三方library的时候bundle大约是500K左右。当bundle size大过3M之后，如果app的初始界面是一个ReactRootView的话，冷启动时会出现几秒钟的白屏现象，在low end设备上很为">
+<meta name="keywords" content="react-native">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React Native在原生Android app的启动白屏问题">
+<meta property="og:url" content="http://yoursite.com/2017/06/15/react-native-one-year-summary/index.html">
+<meta property="og:site_name" content="much joy">
+<meta property="og:description" content="入React Native的坑已经一年多了。在植入原生的Android app过程中遇到了各种的问题。以下做个总结。 Start up performanceReact Native在不加第三方library的时候bundle大约是500K左右。当bundle size大过3M之后，如果app的初始界面是一个ReactRootView的话，冷启动时会出现几秒钟的白屏现象，在low end设备上很为">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-03-10T03:22:33.213Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React Native在原生Android app的启动白屏问题">
+<meta name="twitter:description" content="入React Native的坑已经一年多了。在植入原生的Android app过程中遇到了各种的问题。以下做个总结。 Start up performanceReact Native在不加第三方library的时候bundle大约是500K左右。当bundle size大过3M之后，如果app的初始界面是一个ReactRootView的话，冷启动时会出现几秒钟的白屏现象，在low end设备上很为">
+  
+    <link rel="alternate" href="/atom.xml" title="much joy" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/avatar_small.jpg">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/highlight.css">
+</head>
+</html>
+<body>
+  <div id="fullpage" class="mobile-nav-right">
+    
+      <div id="wrapper" title="图片来自网络">
+    
+    
+      <header id="header">
+  <div id="nav-toggle" class="nav-toggle"></div>
+  <div class="head-box global-width">
+    <nav class="nav-box nav-right">
+      
+        <a class="nav-item" href="/" title>首页</a>
+      
+        <a class="nav-item" href="/archives" title>归档</a>
+      
+    </nav>
+  </div>
+</header>
+      <div id="middlecontent" title class="global-width sidebar-right">
+        <section id="main"><article id="post-react-native-one-year-summary" class="article global-container article-type-post" itemscope itemprop="blogPost">
+  
+    <header class="article-header">
+      
+  
+    <h1 class="article-title" itemprop="name">
+      React Native在原生Android app的启动白屏问题
+    </h1>
+  
+
+    </header>
+  
+  <div class="article-meta">
+    <a href="/2017/06/15/react-native-one-year-summary/" class="article-date">
+  <time datetime="2017-06-16T05:41:32.000Z" itemprop="datePublished">2017-06-15</time>
+</a>
+    
+    
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/react-native/">react-native</a></li></ul>
+
+  </div>
+  
+    <span id="busuanzi_container_page_pv">
+      本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  
+
+  <div class="article-inner">
+    
+    <div class="article-content article-content-doorframe" itemprop="articleBody">
+      
+        <p>入React Native的坑已经一年多了。在植入原生的Android app过程中遇到了各种的问题。以下做个总结。</p>
+<h3 id="Start-up-performance"><a href="#Start-up-performance" class="headerlink" title="Start up performance"></a>Start up performance</h3><p>React Native在不加第三方library的时候bundle大约是500K左右。当bundle size大过3M之后，如果app的初始界面是一个ReactRootView的话，冷启动时会出现几秒钟的白屏现象，在low end设备上很为明显。</p>
+<p>解决方案：<br><a href="https://engineering.instagram.com/react-native-at-instagram-dd828a9a90c7" target="_blank" rel="noopener">Instagram的Performance总结</a>一定要看！其中提到start up performance的<a href="https://medium.com/@martinbigio/random-access-modules-bundling-is-a-mode-the-rn-packager-has-where-the-output-contains-an-index-f1ccfb20fb65" target="_blank" rel="noopener">三个优化方案</a>都是非常有用的，具体实现步骤会在以下几点说明。</p>
+<h4 id="其一：Random-Access-Modules-Bundling"><a href="#其一：Random-Access-Modules-Bundling" class="headerlink" title="其一：Random Access Modules Bundling"></a>其一：Random Access Modules Bundling</h4><p>这里我使用的是<a href="https://ericroz.wordpress.com/2017/02/24/unbundling-react-native-unbundle/" target="_blank" rel="noopener">unbundle</a>中的<code>FILE-BASED UNBUNDLE</code>。一般情况下react.gradle里面有一个<code>bundle</code>指令，在生成apk的时候会使用到。这个指令生成一个<code>index.android.bundle</code>的文件放到assets里面。这个文件越大，JS载入的时间就会越长。Note: dev mode的bundle会比non-dev的bundle大一倍多，这里所指的是non-dev bundle。</p>
+<p>只要把<code>bundle</code>指令改成<code>unbundle</code>，生成的文件就会变成一个叫<code>js-modules</code>的文件夹与一个很小的<code>index.android.bundle</code>文件。这会让React Native能够在需要的时候才载入相关模块，aka. load modules on-demand。</p>
+<p>但是仅仅是这样是不够的。因为所有在index里面需要import的模块及子模块都会被载入。结果还是会很慢。Unbundle只有在与inline require一同使用的时候才会效果明显。</p>
+<h4 id="其二：Inline-Requires"><a href="#其二：Inline-Requires" class="headerlink" title="其二：Inline Requires"></a>其二：Inline Requires</h4><p>这里我使用的是<a href="https://github.com/zertosh/babel-plugin-transform-inline-imports-commonjs" target="_blank" rel="noopener">babel-plugin-transform-inline-imports-commonjs</a>。这个plugin可以将import改为lazy loaded requires。结合Unbundle一起使用就会让JS bundle loader能有效的lazy load所有模块。不用的模块将不会被载入。</p>
+<p>不过需要注意的是，这样做会把module loading的overhead分散到app的每个角落，或许会增加app使用过程中render所需的时间。不过在实践中我觉得还是值得的，毕竟分散过后载入模块的时间是非常短的，比集中在start up白屏好得多。</p>
+<h4 id="其三：Native-Parallel-Fetching"><a href="#其三：Native-Parallel-Fetching" class="headerlink" title="其三：Native Parallel Fetching"></a>其三：Native Parallel Fetching</h4><p>这个就不多说了，根据情况尽可能的在native获取需要的信息。Network总是要过bridge的，外加等App冷启动的时间和bundle load的时间，各种delay以后使用起来就比较慢了。如果能在native fetch, 等bundle加载完以后数据也差不多可以了，直接过bridge放进store让component render，这样比等在JS里面fetch会更快。不过这种方法没有在JS里面直接fetch的code简单，也比较不容易与Web React app share code。有得必有失吧。</p>
+<p>以上。</p>
+
+      
+    </div>
+    
+      <footer class="article-footer">
+        完
+      </footer>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  <div class="article-nav-block">
+    
+  </div>
+  <div class="article-nav-block">
+    
+      <a href="/2017/06/10/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">Hello World</div>
+        <strong class="article-nav-caption"></strong>
+      </a>
+    
+  </div>
+</nav>
+
+    
+<div id="gitmentContainer"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  owner: 'null',
+  repo: 'null',
+  oauth: {
+    client_id: 'null',
+    client_secret: 'null',
+  },
+})
+gitment.render('gitmentContainer')
+</script>
+
+  
+  
+</article>
+</section>
+        <aside id="sidebar">
+  
+    <div class="widget-box">
+  <div class="avatar-box">
+    <img class="avatar" src="/images/avatar.jpg" title="猫大王">
+    <h3 class="avatar-name">
+      
+        雪梨
+      
+    </h3>
+    <p class="avatar-slogan">
+      猫大王叫我写代码
+    </p>
+  </div>
+</div>
+
+
+  
+    
+
+  
+    
+  <div class="widget-box">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/react-native/">react-native</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-box">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/react-native/" style="font-size: 10px;">react-native</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-box">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-box">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/06/15/react-native-one-year-summary/">React Native在原生Android app的启动白屏问题</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/10/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+      </div>
+      <footer id="footer">
+  <div class="foot-box global-width">
+    &copy; 2019 Shirley Gong &nbsp;&nbsp;
+    驱动于 <a href="http://hexo.io/" target="_blank">Hexo</a>
+    &nbsp;|&nbsp;主题 <a href="https://github.com/yiluyanxia/hexo-theme-antiquity">antiquity</a>
+    <br>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv">阁下是第<span id="busuanzi_value_site_pv"></span>个访客</span>
+  </div>
+</footer>
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+    </div>
+    <nav id="mobile-nav" class="mobile-nav-box">
+  <div class="mobile-nav-img mobile-nav-top"></div>
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+  <div class="mobile-nav-img  mobile-nav-bottom"></div>
+</nav>    
+  </div>
+</body>
+</html>
