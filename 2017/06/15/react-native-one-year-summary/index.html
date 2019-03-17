@@ -23,23 +23,23 @@ ga('send', 'pageview');
   
   
   
-  <meta name="description" content="入React Native的坑已经一年多了。在植入原生的Android app过程中遇到了各种的问题。以下做个总结。 Start up performanceReact Native在不加第三方library的时候bundle大约是500K左右。当bundle size大过3M之后，如果app的初始界面是一个ReactRootView的话，冷启动时会出现几秒钟的白屏现象，在low end设备上很为">
+  <meta name="description" content="入React Native的坑已经一年多了。在植入原生的Android app过程中遇到了各种的问题。以下做个总结。">
 <meta name="keywords" content="react-native">
 <meta property="og:type" content="article">
 <meta property="og:title" content="React Native在原生Android app的启动白屏问题">
 <meta property="og:url" content="http://yoursite.com/2017/06/15/react-native-one-year-summary/index.html">
 <meta property="og:site_name" content="much joy">
-<meta property="og:description" content="入React Native的坑已经一年多了。在植入原生的Android app过程中遇到了各种的问题。以下做个总结。 Start up performanceReact Native在不加第三方library的时候bundle大约是500K左右。当bundle size大过3M之后，如果app的初始界面是一个ReactRootView的话，冷启动时会出现几秒钟的白屏现象，在low end设备上很为">
+<meta property="og:description" content="入React Native的坑已经一年多了。在植入原生的Android app过程中遇到了各种的问题。以下做个总结。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-10T03:22:33.213Z">
+<meta property="og:updated_time" content="2019-03-17T03:00:20.609Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="React Native在原生Android app的启动白屏问题">
-<meta name="twitter:description" content="入React Native的坑已经一年多了。在植入原生的Android app过程中遇到了各种的问题。以下做个总结。 Start up performanceReact Native在不加第三方library的时候bundle大约是500K左右。当bundle size大过3M之后，如果app的初始界面是一个ReactRootView的话，冷启动时会出现几秒钟的白屏现象，在low end设备上很为">
+<meta name="twitter:description" content="入React Native的坑已经一年多了。在植入原生的Android app过程中遇到了各种的问题。以下做个总结。">
   
     <link rel="alternate" href="/atom.xml" title="much joy" type="application/atom+xml">
   
   
-    <link rel="icon" href="/images/avatar_small.jpg">
+    <link rel="icon" href="/images/avatar_round.png">
   
   
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
@@ -101,6 +101,7 @@ ga('send', 'pageview');
     <div class="article-content article-content-doorframe" itemprop="articleBody">
       
         <p>入React Native的坑已经一年多了。在植入原生的Android app过程中遇到了各种的问题。以下做个总结。</p>
+<a id="more"></a>
 <h3 id="Start-up-performance"><a href="#Start-up-performance" class="headerlink" title="Start up performance"></a>Start up performance</h3><p>React Native在不加第三方library的时候bundle大约是500K左右。当bundle size大过3M之后，如果app的初始界面是一个ReactRootView的话，冷启动时会出现几秒钟的白屏现象，在low end设备上很为明显。</p>
 <p>解决方案：<br><a href="https://engineering.instagram.com/react-native-at-instagram-dd828a9a90c7" target="_blank" rel="noopener">Instagram的Performance总结</a>一定要看！其中提到start up performance的<a href="https://medium.com/@martinbigio/random-access-modules-bundling-is-a-mode-the-rn-packager-has-where-the-output-contains-an-index-f1ccfb20fb65" target="_blank" rel="noopener">三个优化方案</a>都是非常有用的，具体实现步骤会在以下几点说明。</p>
 <h4 id="其一：Random-Access-Modules-Bundling"><a href="#其一：Random-Access-Modules-Bundling" class="headerlink" title="其一：Random Access Modules Bundling"></a>其一：Random Access Modules Bundling</h4><p>这里我使用的是<a href="https://ericroz.wordpress.com/2017/02/24/unbundling-react-native-unbundle/" target="_blank" rel="noopener">unbundle</a>中的<code>FILE-BASED UNBUNDLE</code>。一般情况下react.gradle里面有一个<code>bundle</code>指令，在生成apk的时候会使用到。这个指令生成一个<code>index.android.bundle</code>的文件放到assets里面。这个文件越大，JS载入的时间就会越长。Note: dev mode的bundle会比non-dev的bundle大一倍多，这里所指的是non-dev bundle。</p>
