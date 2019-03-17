@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-03-17T03:00:20.609Z</updated>
+  <updated>2019-03-17T04:26:27.407Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://yoursite.com/2017/06/15/react-native-one-year-summary/"/>
     <id>http://yoursite.com/2017/06/15/react-native-one-year-summary/</id>
     <published>2017-06-16T05:41:32.000Z</published>
-    <updated>2019-03-17T03:00:20.609Z</updated>
+    <updated>2019-03-17T04:26:27.407Z</updated>
     
     <content type="html"><![CDATA[<p>入React Native的坑已经一年多了。在植入原生的Android app过程中遇到了各种的问题。以下做个总结。</p><a id="more"></a><h3 id="Start-up-performance"><a href="#Start-up-performance" class="headerlink" title="Start up performance"></a>Start up performance</h3><p>React Native在不加第三方library的时候bundle大约是500K左右。当bundle size大过3M之后，如果app的初始界面是一个ReactRootView的话，冷启动时会出现几秒钟的白屏现象，在low end设备上很为明显。</p><p>解决方案：<br><a href="https://engineering.instagram.com/react-native-at-instagram-dd828a9a90c7" target="_blank" rel="noopener">Instagram的Performance总结</a>一定要看！其中提到start up performance的<a href="https://medium.com/@martinbigio/random-access-modules-bundling-is-a-mode-the-rn-packager-has-where-the-output-contains-an-index-f1ccfb20fb65" target="_blank" rel="noopener">三个优化方案</a>都是非常有用的，具体实现步骤会在以下几点说明。</p><h4 id="其一：Random-Access-Modules-Bundling"><a href="#其一：Random-Access-Modules-Bundling" class="headerlink" title="其一：Random Access Modules Bundling"></a>其一：Random Access Modules Bundling</h4><p>这里我使用的是<a href="https://ericroz.wordpress.com/2017/02/24/unbundling-react-native-unbundle/" target="_blank" rel="noopener">unbundle</a>中的<code>FILE-BASED UNBUNDLE</code>。一般情况下react.gradle里面有一个<code>bundle</code>指令，在生成apk的时候会使用到。这个指令生成一个<code>index.android.bundle</code>的文件放到assets里面。这个文件越大，JS载入的时间就会越长。Note: dev mode的bundle会比non-dev的bundle大一倍多，这里所指的是non-dev bundle。</p><p>只要把<code>bundle</code>指令改成<code>unbundle</code>，生成的文件就会变成一个叫<code>js-modules</code>的文件夹与一个很小的<code>index.android.bundle</code>文件。这会让React Native能够在需要的时候才载入相关模块，aka. load modules on-demand。</p><p>但是仅仅是这样是不够的。因为所有在index里面需要import的模块及子模块都会被载入。结果还是会很慢。Unbundle只有在与inline require一同使用的时候才会效果明显。</p><h4 id="其二：Inline-Requires"><a href="#其二：Inline-Requires" class="headerlink" title="其二：Inline Requires"></a>其二：Inline Requires</h4><p>这里我使用的是<a href="https://github.com/zertosh/babel-plugin-transform-inline-imports-commonjs" target="_blank" rel="noopener">babel-plugin-transform-inline-imports-commonjs</a>。这个plugin可以将import改为lazy loaded requires。结合Unbundle一起使用就会让JS bundle loader能有效的lazy load所有模块。不用的模块将不会被载入。</p><p>不过需要注意的是，这样做会把module loading的overhead分散到app的每个角落，或许会增加app使用过程中render所需的时间。不过在实践中我觉得还是值得的，毕竟分散过后载入模块的时间是非常短的，比集中在start up白屏好得多。</p><h4 id="其三：Native-Parallel-Fetching"><a href="#其三：Native-Parallel-Fetching" class="headerlink" title="其三：Native Parallel Fetching"></a>其三：Native Parallel Fetching</h4><p>这个就不多说了，根据情况尽可能的在native获取需要的信息。Network总是要过bridge的，外加等App冷启动的时间和bundle load的时间，各种delay以后使用起来就比较慢了。如果能在native fetch, 等bundle加载完以后数据也差不多可以了，直接过bridge放进store让component render，这样比等在JS里面fetch会更快。不过这种方法没有在JS里面直接fetch的code简单，也比较不容易与Web React app share code。有得必有失吧。</p><p>以上。</p>]]></content>
     
@@ -33,6 +33,8 @@
     
     
       <category term="react-native" scheme="http://yoursite.com/tags/react-native/"/>
+    
+      <category term="android" scheme="http://yoursite.com/tags/android/"/>
     
   </entry>
   
