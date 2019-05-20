@@ -23,30 +23,36 @@ ga('send', 'pageview');
   
   
   
-  <meta name="description" content="坐标温哥华的安卓程序员其实是苹果脑残粉目前正入React Native和Flutter的坑摸爬打滚后端的前端开发者家有两只猫主子  Last updated: 2019-03-16">
+  <meta name="description" content="坐标温哥华的安卓程序员其实是苹果脑残粉目前正入React Native和Flutter的坑摸爬打滚后端的前端开发者家有两只猫主子 Last updated: 2019-03-16">
 <meta property="og:type" content="website">
 <meta property="og:title" content="About me">
 <meta property="og:url" content="http://yoursite.com/about/index.html">
 <meta property="og:site_name" content="much joy">
-<meta property="og:description" content="坐标温哥华的安卓程序员其实是苹果脑残粉目前正入React Native和Flutter的坑摸爬打滚后端的前端开发者家有两只猫主子  Last updated: 2019-03-16">
+<meta property="og:description" content="坐标温哥华的安卓程序员其实是苹果脑残粉目前正入React Native和Flutter的坑摸爬打滚后端的前端开发者家有两只猫主子 Last updated: 2019-03-16">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/about/img/blue.png">
-<meta property="og:updated_time" content="2019-03-17T04:10:45.075Z">
+<meta property="og:updated_time" content="2019-05-20T21:07:37.750Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="About me">
-<meta name="twitter:description" content="坐标温哥华的安卓程序员其实是苹果脑残粉目前正入React Native和Flutter的坑摸爬打滚后端的前端开发者家有两只猫主子  Last updated: 2019-03-16">
-<meta name="twitter:image" content="http://yoursite.com/about/img/blue.png">
+<meta name="twitter:description" content="坐标温哥华的安卓程序员其实是苹果脑残粉目前正入React Native和Flutter的坑摸爬打滚后端的前端开发者家有两只猫主子 Last updated: 2019-03-16">
   
     <link rel="alternate" href="/atom.xml" title="much joy" type="application/atom+xml">
   
   
-    <link rel="icon" href="/images/avatar_round.png">
+    <link rel="icon" href="/images/default-avatar.webp">
   
   
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/highlight.css">
+  <script>
+  let antiquityStorage = window.sessionStorage.getItem('antiquitySessionStorage');
+  if (antiquityStorage == '' || antiquityStorage == null) {
+    var antiquityLoader = '<div id="loaderbox"><div class="loader"><div class="load-roll"><div class="load-top"></div><div class="load-right"></div><div class="load-bottom"></div></div></div></div>';
+    document.write(antiquityLoader);
+    document.body.style.overflow = 'hidden'
+  }
+  </script>
 </head>
 </html>
 <body>
@@ -97,10 +103,9 @@ ga('send', 'pageview');
 
   <div class="article-inner">
     
-    <div class="article-content article-content-doorframe" itemprop="articleBody">
+    <div class="article-content article-content-cloud" itemprop="articleBody">
       
         <p>坐标温哥华的安卓程序员<br>其实是苹果脑残粉<br>目前正入<a href="https://facebook.github.io/react-native/" target="_blank" rel="noopener">React Native</a>和<a href="https://flutter.dev/" target="_blank" rel="noopener">Flutter</a>的坑<br>摸爬打滚后端的前端开发者<br>家有两只猫主子</p>
-<p><img src="./img/blue.png" width="50%/"></p>
 <p>Last updated: 2019-03-16</p>
 
       
@@ -138,7 +143,7 @@ gitment.render('gitmentContainer')
   
     <div class="widget-box">
   <div class="avatar-box">
-    <img class="avatar" src="/images/avatar.jpg" title="猫大王">
+    <img class="avatar" src="/images/default-avatar.webp" title="猫大王">
     <h3 class="avatar-name">
       
         雪梨
@@ -202,6 +207,16 @@ gitment.render('gitmentContainer')
   </div>
 
   
+      <div class="widget-box">
+    <h3 class="widget-title">友链</h3>
+    <div class="widget">
+      
+        <a style="display: block;" href="https://yiluyanxia.github.io/" title target="_blank">一路眼瞎</a>
+      
+    </div>
+  </div>
+
+  
 </aside>
       </div>
       <footer id="footer">
@@ -211,12 +226,17 @@ gitment.render('gitmentContainer')
     &nbsp;|&nbsp;主题 <a href="https://github.com/yiluyanxia/hexo-theme-antiquity">antiquity</a>
     <br>
     <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span id="busuanzi_container_site_pv">阁下是第<span id="busuanzi_value_site_pv"></span>个访客</span>
+    <span id="busuanzi_container_site_pv">不蒜子告之   阁下是第<span id="busuanzi_value_site_pv"></span>个访客</span>
   </div>
 </footer>
-      <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-<script src="/js/jquery-2.0.3.min.js"></script>
+      <script src="https://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script>
+if (!window.jQuery) {
+var script = document.createElement('script');
+script.src = "/js/jquery-2.0.3.min.js";
+document.body.write(script);
+}
+</script>
 
   <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
   <script src="/fancybox/jquery.fancybox.pack.js"></script>

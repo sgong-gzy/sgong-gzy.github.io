@@ -39,13 +39,21 @@ ga('send', 'pageview');
     <link rel="alternate" href="/atom.xml" title="much joy" type="application/atom+xml">
   
   
-    <link rel="icon" href="/images/avatar_round.png">
+    <link rel="icon" href="/images/default-avatar.webp">
   
   
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/highlight.css">
+  <script>
+  let antiquityStorage = window.sessionStorage.getItem('antiquitySessionStorage');
+  if (antiquityStorage == '' || antiquityStorage == null) {
+    var antiquityLoader = '<div id="loaderbox"><div class="loader"><div class="load-roll"><div class="load-top"></div><div class="load-right"></div><div class="load-bottom"></div></div></div></div>';
+    document.write(antiquityLoader);
+    document.body.style.overflow = 'hidden'
+  }
+  </script>
 </head>
 </html>
 <body>
@@ -98,7 +106,7 @@ ga('send', 'pageview');
 
   <div class="article-inner">
     
-    <div class="article-content article-content-doorframe" itemprop="articleBody">
+    <div class="article-content article-content-cloud" itemprop="articleBody">
       
         <p>入React Native的坑已经一年多了。在植入原生的Android app过程中遇到了各种的问题。以下做个总结。</p>
 <a id="more"></a>
@@ -161,7 +169,7 @@ gitment.render('gitmentContainer')
   
     <div class="widget-box">
   <div class="avatar-box">
-    <img class="avatar" src="/images/avatar.jpg" title="猫大王">
+    <img class="avatar" src="/images/default-avatar.webp" title="猫大王">
     <h3 class="avatar-name">
       
         雪梨
@@ -225,6 +233,16 @@ gitment.render('gitmentContainer')
   </div>
 
   
+      <div class="widget-box">
+    <h3 class="widget-title">友链</h3>
+    <div class="widget">
+      
+        <a style="display: block;" href="https://yiluyanxia.github.io/" title target="_blank">一路眼瞎</a>
+      
+    </div>
+  </div>
+
+  
 </aside>
       </div>
       <footer id="footer">
@@ -234,12 +252,17 @@ gitment.render('gitmentContainer')
     &nbsp;|&nbsp;主题 <a href="https://github.com/yiluyanxia/hexo-theme-antiquity">antiquity</a>
     <br>
     <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span id="busuanzi_container_site_pv">阁下是第<span id="busuanzi_value_site_pv"></span>个访客</span>
+    <span id="busuanzi_container_site_pv">不蒜子告之   阁下是第<span id="busuanzi_value_site_pv"></span>个访客</span>
   </div>
 </footer>
-      <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-<script src="/js/jquery-2.0.3.min.js"></script>
+      <script src="https://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script>
+if (!window.jQuery) {
+var script = document.createElement('script');
+script.src = "/js/jquery-2.0.3.min.js";
+document.body.write(script);
+}
+</script>
 
   <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
   <script src="/fancybox/jquery.fancybox.pack.js"></script>
