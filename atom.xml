@@ -5,9 +5,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
+  <link href="https://sgong-gzy.github.io/"/>
   <updated>2019-03-17T04:26:27.407Z</updated>
-  <id>http://yoursite.com/</id>
+  <id>https://sgong-gzy.github.io/</id>
   
   <author>
     <name>sgong</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>React Native在原生Android app的启动白屏问题</title>
-    <link href="http://yoursite.com/2017/06/15/react-native-one-year-summary/"/>
-    <id>http://yoursite.com/2017/06/15/react-native-one-year-summary/</id>
+    <link href="https://sgong-gzy.github.io/2017/06/15/react-native-one-year-summary/"/>
+    <id>https://sgong-gzy.github.io/2017/06/15/react-native-one-year-summary/</id>
     <published>2017-06-16T05:41:32.000Z</published>
     <updated>2019-03-17T04:26:27.407Z</updated>
     
@@ -32,16 +32,16 @@
     </summary>
     
     
-      <category term="react-native" scheme="http://yoursite.com/tags/react-native/"/>
+      <category term="react-native" scheme="https://sgong-gzy.github.io/tags/react-native/"/>
     
-      <category term="android" scheme="http://yoursite.com/tags/android/"/>
+      <category term="android" scheme="https://sgong-gzy.github.io/tags/android/"/>
     
   </entry>
   
   <entry>
     <title>Hello World</title>
-    <link href="http://yoursite.com/2017/06/10/hello-world/"/>
-    <id>http://yoursite.com/2017/06/10/hello-world/</id>
+    <link href="https://sgong-gzy.github.io/2017/06/10/hello-world/"/>
+    <id>https://sgong-gzy.github.io/2017/06/10/hello-world/</id>
     <published>2017-06-11T05:52:07.000Z</published>
     <updated>2019-03-17T03:00:42.409Z</updated>
     
